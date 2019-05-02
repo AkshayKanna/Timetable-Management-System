@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - Christmas CCCM Login</title>
+  <meta name="viewport" content="width=device-width">
+  
+  
+  
+      <style>
+      @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.wrap {
+  width: 100%;
+  background: #24272a url() no-repeat center/cover;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background 1.5s linear;
+  animation: bgColor 10s infinite;
+}
+
+.login {
+  box-sizing: border-box;
+  background: rgba(36, 39, 42, 0.95);
+  position: relative;
+  padding: 25px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 25%;
+  z-index: 5;
+}
+.login .title {
+  box-sizing: border-box;
+  padding: 10px;
+  display: inline-block;
+  border-top: 1px solid #3cb878;
+  /* Green */
+  border-left: 1px solid #e83922;
+  border-right: 1px solid #3cb878;
+  /* Red */
+  border-bottom: 1px solid #e83922;
+  margin-bottom: 15px;
+}
+.login .title img {
+  vertical-align: bottom;
+}
+.login .fields input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 5px;
+  background: #f3f3f3;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 0 0 #499ccb;
+  font-size: .9em;
+  margin: 10px 0;
+  letter-spacing: 1px;
+  transition: all .24s ease;
+}
+.login .fields input:focus {
+  background: #e9e9e9;
+  color: #3f3f3f;
+}
+.login .fields input.complete {
+  color: #3f3f3f;
+  box-shadow: 0 0 0 1.5px #3cb878;
+}
+.login .submit {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  min-width: 50%;
+  text-align: center;
+  box-sizing: border-box;
+  margin-top: 15px;
+  color: #f3f3f3;
+  background: #499ccb;
+  text-transform: uppercase;
+  padding: 8px 15px;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+}
+.login .submit span {
+  position: relative;
+  z-index: 10;
+  color: #f3f3f3;
+}
+.login .submit:before {
+  position: absolute;
+  content: ' ';
+  z-index: 5;
+  background: #3cb878;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  z-index: 4;
+  transition: all .24s ease;
+}
+.login .submit:hover:before {
+  width: 100%;
+}
+
+.canvas-special {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(180deg);
+  z-index: 0;
+}
+
+.special-message {
+  color: #f3f3f3;
+  font-weight: 100;
+  letter-spacing: 1px;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+.special-message .merry {
+  color: #e83922;
+}
+.special-message .christmas {
+  color: #3cb878;
+}
+
+.forgot {
+  width: 100%;
+  text-align: left;
+}
+.forgot a {
+  color: #f3f3f3;
+  text-decoration: none;
+}
+
+    </style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no" >
+
+  <div class="wrap" id="loginPage">
+  <canvas id="special" class="canvas-special"></canvas>
+  <div class="login">
+    <div class="title"><img src="http://cccm.com/themes/hylia/images/logo.svg"></div>
+    <h5 class="special-message"><span class="merry">Merry</span> <span class="christmas">Christmas</span> from CTS</h5>
+    <div class="fields">
+      <input type="text" placeholder="Email">
+      <input type="password" placeholder="Password">
+    </div>
+    <div class="forgot"><a href="#">Forget Password?</a></p>
+    <div class="submit"><span>Login</span></div>
+    </div>
+</div>
+    <script src="//static.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js"></script>
+
+  
+  
+
+    <script >
+      // Thanks codrops for the 'snow' canvas code
+
+(function(){
+   var width, height, largeHeader, canvas, ctx, circles, target, animateHeader = true;
+  
+  initHeader();
+  addListeners();
+  
+ function initHeader() {
+   width = window.innerWidth;
+   height = window.innerHeight;
+   target = {x: 0, y: height}
+   largeHeader = document.getElementById('loginPage');
+   largeHeader.style.height = height+'px';
+   
+   canvas = document.getElementById('special');
+   canvas.width = width;
+   canvas.height = height;
+   ctx = canvas.getContext('2d');
+   
+   circles = [];
+   for(var x = 0; x < width*0.5; x++){
+     var c = new Circle();
+     circles.push(c);
+   }
+   animate();
+ }
+  
+  function addListeners() {
+    window.addEventListener('resize', resize);
+  }
+  
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    largeHeader.style.height = height+'px';
+    canvas.width = width;
+    canvas.height = height;
+  }
+  
+  function animate() {
+    if(animateHeader) {
+      ctx.clearRect(0,0,width,height);
+      for(var i in circles) {
+        circles[i].draw();
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+ 
+  function Circle() {
+    var _this = this;
+    (function(){
+      _this.pos = {}
+      init();
+      //console.log(_this);
+    }());
+    
+    function init() {
+      _this.pos.x = Math.random()*width;
+      _this.pos.y = height+Math.random()*100;
+      _this.alpha = 0.1+Math.random()*0.3;
+      _this.scale = 0.1+Math.random()*0.3;
+      _this.velocity = Math.random();
+    }
+    
+    this.draw = function() {
+      if(_this.alpha <= 0) {
+        init();
+      }
+       _this.pos.y -= _this.velocity;
+            _this.alpha -= 0.0005;
+            ctx.beginPath();
+            ctx.arc(_this.pos.x, _this.pos.y, _this.scale*10, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'rgba(255,255,255,'+ _this.alpha+')';
+            ctx.fill();
+    }
+  }
+  
+  inputs = document.getElementsByTagName('input');
+  for(var field = 0; field < inputs.length; field++) {
+    inputs[field].addEventListener('keyup', checkField);
+  }
+  
+  function checkField() {
+    if(this.value.length >= 5) {
+      this.classList = 'complete';
+    } else {
+      this.removeAttribute('class');
+    }
+  }
+  
+}());
+      //# sourceURL=pen.js
+    </script>
+
+
+
+  
+  
+
+</body>
+
+</html>
+ 
